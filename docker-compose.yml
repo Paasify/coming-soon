@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  coming-soon:
+    build: .
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=web"
+      - "traefik.http.routers.paasifycomingsoon-secure.entrypoints=websecure"
+      - "traefik.http.routers.paasifycomingsoon-secure.rule=Host(`paasify.app`)"
+      - "traefik.http.routers.paasifycomingsoon-secure.service=paasifycomingsoon-service"
+      - "traefik.http.services.paasifycomingsoon-service.loadbalancer.server.port=5000"
+
+networks:
+  proxy:
+    external: true
